@@ -45,7 +45,7 @@ const authClient = new OktaAuth(oktaConfig);
 
 /**Initialize the okta auth client with the config options */
       Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
-        var url =window.location.href;	         /**Initialize the okta auth client with the config options */
+        var url =window.location.href;	       
                 if(url.indexOf('code')<=-1){
                   authClient.signInWithRedirect({
                       originalUri:'https://rekojen.github.io',
@@ -62,9 +62,10 @@ const authClient = new OktaAuth(oktaConfig);
 				if (oStorage && Object.keys(oStorage).length) {
 					const { nonce } = oStorage || {};
 					sNonce = nonce || '';
-				}
-			}
-
+            			}
+       			 }
+ 		   }
+	});
         const urlParams = new URLSearchParams(window.location.search); // Get the authorization response which is added as a query string from the redirect URL
         const authCode1 = urlParams.has('code') ? urlParams.get('code'):''; // Get code from the query string
         
