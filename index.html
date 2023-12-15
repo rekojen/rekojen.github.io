@@ -55,13 +55,13 @@ const authClient = new OktaAuth(oktaConfig);
                 else {
 	//** OktaAuth generates nonce by default and send it to authorization server which then stores it in session storage. In order to send the same nonce to the authClient get it from the session storage and resolve it in getAuthCode
  			let sOktaTransactionStorage = window.sessionStorage.getItem("okta-transaction-storage"), 
-				verifier = '',
 				sNonce = '';
 			if (sOktaTransactionStorage) {
 				const oStorage = JSON.parse(sOktaTransactionStorage);
 				if (oStorage && Object.keys(oStorage).length) {
 					const { nonce } = oStorage || {};
 					sNonce = nonce || '';
+					console.log('nonce: '+sNonce);
             			}
        			 }
  		   }
@@ -70,7 +70,7 @@ const authClient = new OktaAuth(oktaConfig);
         const authCode1 = urlParams.has('code') ? urlParams.get('code'):''; // Get code from the query string
         
                   console.log('authcode: '+authCode1);
-                  console.log('nonce: '+sNonce);
+
 
 			// OpenId Authentication setup
 			// AuthProvider plugin written by the brand
