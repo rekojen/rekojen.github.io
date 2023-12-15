@@ -34,6 +34,8 @@
           maxAge : 86400
   };
 const authClient = new OktaAuth(oktaConfig);
+let sNonce = ''; 
+let authCode1 = '';
 
 // Initialize the Okta auth client with the config options
 Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
@@ -45,7 +47,6 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
         });
     } else {
 	// Retrieve and set nonce from session storage if available
-	let sNonce = '';
         let sOktaTransactionStorage = window.sessionStorage.getItem("okta-transaction-storage");
         if (sOktaTransactionStorage) {
             try {
@@ -62,7 +63,7 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
 
         // Get the authorization response from the query string
         const urlParams = new URLSearchParams(window.location.search);
-        const authCode1 = urlParams.has('code') ? urlParams.get('code') : '';
+        authCode1 = urlParams.has('code') ? urlParams.get('code') : '';
         console.log('authcode: ' + authCode1);
 
         // Register AuthProvider commands and subscriptions
