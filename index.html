@@ -87,6 +87,10 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
             console.log(res);
         });
 
+	AuthProvider.registerCommand('reAuthenticate', (e) => {
+			e.resolve();
+	});
+	
         AuthProvider.ready();
 });
 
