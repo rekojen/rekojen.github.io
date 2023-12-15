@@ -19,9 +19,8 @@
     environment: 'prod-apne1',
     deploymentId: 'be7b456d-7625-4f4f-83b3-ed30ebf47cc2'
   });
-</script>
 
-  //standard codeverifier from Genesys
+//codeverifier from Genesys
  function generateCodeVerifier(length) {
             let text = '';
             const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
@@ -32,11 +31,11 @@
    }
 
 //define okta config
-  const oktaConfig = {
+  const oktaConfig = {                                         
           redirectUri: 'https://rekojen.github.io',
           postLogoutRedirectUri: 'https://rekojen.github.io',
           clientId: '0oadssleuoEgz6JgK5d7',
-          issuer: 'https://dev-37019008.okta.com/oauth2/default',  //this is the Okta URL
+          issuer: 'https://dev-37019008.okta.com/oauth2/default',  
           scopes: ['openid', 'email', 'profile', 'offline_access'],
           pkce: false,
           responseType: 'code',
@@ -44,7 +43,7 @@
   };
   const authClient = new OktaAuth(oktaConfig);  
 
-//**Initialize the okta auth client with the config options *//
+/**Initialize the okta auth client with the config options */
   (function() {
       Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
         var url =window.location.href;	         /**Initialize the okta auth client with the config options */
@@ -77,5 +76,5 @@
                   console.log('codeVerif: '+codeVerif);
                   console.log('nonce: '+sNonce);
                   console.log('verifier: '+verifier)
-                                
+</script>                                
 </html>
