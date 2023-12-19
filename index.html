@@ -105,6 +105,43 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
 		});
 	
         AuthProvider.ready();
+
+// Make a fetch request
+fetch('https://dev-37019008.okta.com/oauth2/default') // Replace with your endpoint
+  .then(response => {
+    // Check if the response was successful
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
+    }
+    // Capture the response URL
+    var responseURL = response.url;
+    console.log('Response URL:', responseURL);
+
+    // Extract code parameter from the responseURL
+    var code = getCodeFromResponseURL(responseURL);
+    console.log('Authentication Code:', code);
+
+    // You can handle the response data using response.json(), response.text(), etc.
+    return response.json(); // Example: parsing response as JSON
+  })
+  .then(data => {
+    // Handle the parsed response data here (if applicable)
+    console.log('Response Data:', data);
+  })
+  .catch(error => {
+    // Handle errors here
+    console.error('Fetch Error:', error);
+  });
+
+// Function to extract the code parameter from responseURL
+function getCodeFromResponseURL(responseURL) {
+  var url = new URL(responseURL);
+  var code = url.searchParams.get('code');
+  return code;
+}
+
+
+	
 });
 
 </script>                                
