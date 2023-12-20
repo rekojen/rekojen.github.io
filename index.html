@@ -35,9 +35,11 @@
   };
 const authClient = new OktaAuth(oktaConfig);
 
-            authClient.signInWithRedirect({
+Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
+        authClient.signInWithRedirect({
             originalUri: 'https://rekojen.github.io',
             ...oktaConfig
-            );
+        });
+   });
 </script>                                
 </html>
