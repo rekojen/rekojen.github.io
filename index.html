@@ -21,42 +21,5 @@
     debug: true
   });
 
-
-//define okta config
-  const oktaConfig = {                                         
-          redirectUri: 'https://rekojen.github.io',
-          postLogoutRedirectUri: 'https://rekojen.github.io',
-          clientId: '0oadssleuoEgz6JgK5d7',
-          issuer: 'https://dev-37019008.okta.com/oauth2/default/',  
-          scopes: ['openid', 'email', 'profile', 'offline_access'],
-          pkce: false,
-          responseType: 'code',
-          maxAge : 86400
-  };
-const authClient = new OktaAuth(oktaConfig);
-
-Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
-    var url = window.location.href;
-    if (url.indexOf('code') <= -1) {
-        authClient.signInWithRedirect({
-            originalUri: 'https://rekojen.github.io',
-            ...oktaConfig
-        });
-    } else {
-	// Retrieve and set nonce from session storage if available
-        let sOktaTransactionStorage = window.sessionStorage.getItem("okta-transaction-storage");
-        if (sOktaTransactionStorage) {
-            try {
-                const oStorage = JSON.parse(sOktaTransactionStorage);
-                if (oStorage && oStorage.nonce) {
-                    sNonce = oStorage.nonce || '';
-                    console.log('nonce: ' + sNonce);
-                }
-            } catch (error) {
-                console.error("Error parsing sessionStorage:", error);
-            }
-        }
-    }
-   });
 </script>                                
 </html>
