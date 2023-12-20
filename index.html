@@ -35,5 +35,9 @@
   };
 const authClient = new OktaAuth(oktaConfig);
 
+            authClient.signInWithRedirect({
+            originalUri: 'https://rekojen.github.io',
+            ...oktaConfig
+            );
 </script>                                
 </html>
