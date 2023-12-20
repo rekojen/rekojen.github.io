@@ -35,6 +35,7 @@
   };
 const authClient = new OktaAuth(oktaConfig);
 
+Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
     var url = window.location.href;
     if (url.indexOf('code') <= -1) {
         authClient.signInWithRedirect({
