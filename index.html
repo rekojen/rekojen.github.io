@@ -7,106 +7,24 @@
 </body>
   <script src="https://global.oktacdn.com/okta-auth-js/5.2.2/okta-auth-js.min.js" type="text/javascript"></script>
   <script type="text/javascript" charset="utf-8">
-  (function (g, e, n, es, ys) {
-    g['_genesysJs'] = e;
-    g[e] = g[e] || function () {
-      (g[e].q = g[e].q || []).push(arguments)
-    };
-    g[e].t = 1 * new Date();
-    g[e].c = es;
-    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-  })(window, 'Genesys', 'https://apps.mypurecloud.jp/genesys-bootstrap/genesys.min.js', {
-    environment: 'prod-apne1',
-    deploymentId: 'be7b456d-7625-4f4f-83b3-ed30ebf47cc2',
-    debug: true
-  });
-
-
-//define okta config
-  const oktaConfig = {                                         
-          redirectUri: 'https://rekojen.github.io',
-          postLogoutRedirectUri: 'https://rekojen.github.io',
-          clientId: '0oadssleuoEgz6JgK5d7',
-          issuer: 'https://dev-37019008.okta.com/oauth2/default/',  
-          scopes: ['openid', 'email', 'profile', 'offline_access'],
-          pkce: false,
-          responseType: 'code',
-          maxAge : 86400
+(function (g, e, n, es) {
+  g['_genesysJs'] = e;
+  g[e] = g[e] || function () {
+    (g[e].q = g[e].q || []).push(arguments);
   };
-const authClient = new OktaAuth(oktaConfig);
-let sNonce = ''; 
-let authCode1 = '';
-
-// Initialize the Okta auth client with the config options
-Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
-    var url = window.location.href;
-    if (url.indexOf('code') <= -1) {
-        authClient.signInWithRedirect({
-            originalUri: 'https://rekojen.github.io',
-            ...oktaConfig
-        });
-    } else {
-	// Retrieve and set nonce from session storage if available
-        let sOktaTransactionStorage = window.sessionStorage.getItem("okta-transaction-storage");
-        if (sOktaTransactionStorage) {
-            try {
-                const oStorage = JSON.parse(sOktaTransactionStorage);
-                if (oStorage && oStorage.nonce) {
-                    sNonce = oStorage.nonce || '';
-                    console.log('nonce: ' + sNonce);
-                }
-            } catch (error) {
-                console.error("Error parsing sessionStorage:", error);
-            }
-        }
-    }
-
-        // Get the authorization response from the query string
-        const urlParams = new URLSearchParams(window.location.search);
-        authCode1 = urlParams.has('code') ? urlParams.get('code') : '';
-        console.log('authcode: ' + authCode1);
-
-        // Register AuthProvider commands and subscriptions
-        AuthProvider.registerCommand('getAuthCode', (e) => {
-            e.resolve({
-                authCode: authCode1,
-                redirectUri: 'https://rekojen.github.io',
-                nonce: sNonce,
-                maxAge: 86400
-            });
-        });
-
-        AuthProvider.subscribe('Auth.ready', (res) => {
-            console.log('AUTH READY');
-            console.log(res);
-        });
-
-        AuthProvider.subscribe('Auth.authenticated', (res) => {
-            const { message } = error.data || {};
-            console.log('Log authenticated');
-            console.log(res);
-        });
-
-	AuthProvider.registerCommand('reAuthenticate', (e) => {
-			e.resolve();
-	});
-	
-	AuthProvider.subscribe('Auth.error', (error) => {
-	const { message } = error.data || {};
-		// 'message' here is provided by our API and its always expected to be in string. Any security scan results are false postive in this case.
-		console.log("Auth Error", message);
-		// LocalStorage usage is must for this product
-		localStorage.setItem('authFetching', false); // eslint-disable-line
-		});
-
-	AuthProvider.subscribe('Auth.authError', (error) => {
-		// 'message' here is provided by our API and its always expected to be in string. Any security scan results are false postive in this case.
-		console.log("Auth Error", error);
-		});
-	
-        AuthProvider.ready();
-	
-});
+  g[e].t = 1 * new Date();
+  g[e].c = es;
+  var ys = document.createElement('script');
+  ys.async = 1;
+  ys.src = n;
+  ys.charset = 'utf-8';
+  document.head.appendChild(ys);
+})(window, 'Genesys', 'https://apps.mypurecloud.com.au/genesys-bootstrap/genesys.min.js', {
+  environment: 'prod-apse2',
+  deploymentId: '3fe67521-ba8e-4060-a601-a03dd0a49b02',
+  debug:true
+});	
+  });
 
 </script>                                
 </html>
