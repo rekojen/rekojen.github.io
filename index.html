@@ -25,11 +25,15 @@
   debug:true
 });
 
+let sNonce = ''; 
+let authCode1 = '';
+let sRedirectURL = window.location.href;
+console.log('sRedirectURL: ' + sRedirectURL);
 
 //define okta config
   const oktaConfig = {                                         
-          redirectUri: window.location.href,
-          postLogoutRedirectUri: window.location.href,
+          redirectUri: sRedirectURL,
+          postLogoutRedirectUri: sRedirectURL,
           clientId: '0oa3b8af9zb5faqLe3l7',
           issuer: 'https://simply-energy-int.okta.com/oauth2/default/',  
           scopes: ['openid', 'email', 'profile', 'offline_access'],
@@ -38,15 +42,13 @@
           maxAge : 86400
   };
 const authClient = new OktaAuth(oktaConfig);
-let sNonce = ''; 
-let authCode1 = '';
 
 // Initialize the Okta auth client with the config options
 Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
     var url = window.location.href;
     if (url.indexOf('code') <= -1) {
         authClient.signInWithRedirect({
-            originalUri: window.location.href,
+            originalUri: sRedirectURL,
             ...oktaConfig
         });
     } else {
@@ -74,7 +76,7 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
         AuthProvider.registerCommand('getAuthCode', (e) => {
             e.resolve({
                 authCode: authCode1,
-                redirectUri: window.location.href,
+                redirectUri: sRedirectURL,
                 nonce: sNonce,
                 maxAge: 86400
             });
