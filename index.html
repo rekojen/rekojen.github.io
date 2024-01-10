@@ -28,13 +28,32 @@
 
 let sNonce = ''; 
 let authCode1 = '';
-let sRedirectURL = window.location.href;
+let sRedirectURL = '';
+const url = window.location.href;
+
+if (url.indexOf('code') <= -1) {
+    sRedirectURL = window.location.href;
+} else {
+    // Retrieve and set redirectURI from session storage if available
+    let sOktaTransactionStorage = window.sessionStorage.getItem("okta-transaction-storage");
+    if (sOktaTransactionStorage) {
+        try {
+            const oStorage1 = JSON.parse(sOktaTransactionStorage);
+            if (oStorage1 && oStorage1.redirectUri) {
+                sRedirectURL = oStorage1.redirectUri || '';
+                console.log('redirectUri: ' + sRedirectURL);
+            }
+        } catch (error) {
+            console.error("Error parsing sessionStorage:", error);
+        }
+    }
+}
 console.log('sRedirectURL: ' + sRedirectURL);
 
 //define okta config
   const oktaConfig = {                                         
-          redirectUri: 'https://rekojen.github.io/',
-          postLogoutRedirectUri: 'https://rekojen.github.io/',
+          redirectUri: sRedirectURL,
+          postLogoutRedirectUri: sRedirectURL,
           clientId: '0oa3b8af9zb5faqLe3l7',
           issuer: 'https://simply-energy-int.okta.com/oauth2/default/',  
           scopes: ['openid', 'email', 'profile', 'offline_access'],
@@ -49,7 +68,7 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
     var url = window.location.href;
     if (url.indexOf('code') <= -1) {
         authClient.signInWithRedirect({
-            originalUri: 'https://rekojen.github.io/',
+            originalUri: sRedirectURL,
             ...oktaConfig
         });
     } else {
@@ -77,7 +96,7 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
         AuthProvider.registerCommand('getAuthCode', (e) => {
             e.resolve({
                 authCode: authCode1,
-                redirectUri: 'https://rekojen.github.io/',
+                redirectUri: sRedirectURL,
                 nonce: sNonce,
                 maxAge: 86400
             });
