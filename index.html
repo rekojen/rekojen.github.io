@@ -121,12 +121,12 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
 
 const AuthLogoutBtn = document.getElementById('logout');
 AuthLogoutBtn.onclick = function () {
-					AuthProvider.command('Auth.logout')
-						.finally(() => {
-							if (authClient) authClient.signOut();
-						});
-				};
-	
+    AuthProvider.command('Auth.logout')
+        .finally(() => {
+            if (authClient) authClient.signOut();
+        });
+};
+
         AuthProvider.ready();
 	
 });
