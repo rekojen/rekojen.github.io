@@ -29,9 +29,9 @@
 let sNonce = ''; 
 let authCode1 = '';
 let sRedirectURL = '';
-const url = window.location.href;
+const currentURL = window.location.href;
 
-if (url.indexOf('code') <= -1) {
+if (currentURL.indexOf('code') <= -1) {
     sRedirectURL = window.location.href;
 } else {
     // Retrieve and set redirectURI from session storage if available
@@ -65,8 +65,7 @@ const authClient = new OktaAuth(oktaConfig);
 	  
 // Initialize the Okta auth client with the config options
 Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
-    var url = window.location.href;
-    if (url.indexOf('code') <= -1) {
+    if (currentURL.indexOf('code') <= -1) {
         authClient.signInWithRedirect({
             originalUri: sRedirectURL,
             ...oktaConfig
