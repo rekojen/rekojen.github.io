@@ -44,6 +44,13 @@ console.log('sRedirectURL: ' + sRedirectURL);
   };
 const authClient = new OktaAuth(oktaConfig);
 
+    function logout() {
+	AuthProvider.command('Auth.logout')
+	.finally(() => {
+		authClient.signOut();
+		});
+	};
+	  
 // Initialize the Okta auth client with the config options
 Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
     var url = window.location.href;
@@ -110,13 +117,6 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
 		// 'message' here is provided by our API and its always expected to be in string. Any security scan results are false postive in this case.
 		console.log("Auth Error", error);
 		});
-
-    function logout() {
-	AuthProvider.command('Auth.logout')
-	.finally(() => {
-		authClient.signOut();
-		});
-	};
 	
         AuthProvider.ready();
 	
