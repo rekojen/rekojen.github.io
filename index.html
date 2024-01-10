@@ -43,14 +43,6 @@ console.log('sRedirectURL: ' + sRedirectURL);
           maxAge : 86400
   };
 const authClient = new OktaAuth(oktaConfig);
-
-function logout() {
-Genesys('Command ', 'AuthProvider', (AuthProvider) => {
-	AuthProvider.command('Auth.logout')
-	.finally(() => {
-		authClient.signOut();
-		});
-	};
 	  
 // Initialize the Okta auth client with the config options
 Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
@@ -119,13 +111,13 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
 		console.log("Auth Error", error);
 		});
 
-const AuthLogoutBtn = document.getElementById('logout');
-AuthLogoutBtn.onclick = function () {
-    AuthProvider.command('Auth.logout')
-        .finally(() => {
-            if (authClient) authClient.signOut();
-        });
-};
+    const AuthLogoutBtn = document.getElementById('logout');
+    AuthLogoutBtn.onclick = function () {
+        AuthProvider.command('Auth.logout')
+            .finally(() => {
+                if (authClient) authClient.signOut();
+            });
+    };
 
         AuthProvider.ready();
 	
