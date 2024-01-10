@@ -41,7 +41,6 @@ if (currentURL.indexOf('code') <= -1) {
             const oStorage1 = JSON.parse(sOktaTransactionStorage);
             if (oStorage1 && oStorage1.redirectUri) {
                 sRedirectURL = oStorage1.redirectUri || '';
-                console.log('redirectUri: ' + sRedirectURL);
             }
         } catch (error) {
             console.error("Error parsing sessionStorage:", error);
