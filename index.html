@@ -32,8 +32,8 @@ console.log('sRedirectURL: ' + sRedirectURL);
 
 //define okta config
   const oktaConfig = {                                         
-          redirectUri: sRedirectURL,
-          postLogoutRedirectUri: sRedirectURL,
+          redirectUri: 'https://rekojen.github.io/',
+          postLogoutRedirectUri: 'https://rekojen.github.io/',
           clientId: '0oa3b8af9zb5faqLe3l7',
           issuer: 'https://simply-energy-int.okta.com/oauth2/default/',  
           scopes: ['openid', 'email', 'profile', 'offline_access'],
@@ -48,7 +48,7 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
     var url = window.location.href;
     if (url.indexOf('code') <= -1) {
         authClient.signInWithRedirect({
-            originalUri: sRedirectURL,
+            originalUri: 'https://rekojen.github.io/',
             ...oktaConfig
         });
     } else {
@@ -76,7 +76,7 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
         AuthProvider.registerCommand('getAuthCode', (e) => {
             e.resolve({
                 authCode: authCode1,
-                redirectUri: sRedirectURL,
+                redirectUri: 'https://rekojen.github.io/',
                 nonce: sNonce,
                 maxAge: 86400
             });
