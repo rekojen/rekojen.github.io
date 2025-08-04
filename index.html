@@ -54,7 +54,7 @@ console.log('sRedirectURL: ' + sRedirectURL);
           redirectUri: sRedirectURL,
           postLogoutRedirectUri: sRedirectURL,
           clientId: 'clientId', //put in clientId
-          issuer: 'https://simply-energy-int.okta.com/oauth2/default/',  
+          issuer: 'https://<servername>.okta.com/oauth2/default/',  
           scopes: ['openid', 'email', 'profile', 'offline_access'],
           pkce: false,
           responseType: 'code',
@@ -142,3 +142,4 @@ Genesys('registerPlugin', 'AuthProvider', (AuthProvider) => {
 
 </script>                                
 </html>
+
